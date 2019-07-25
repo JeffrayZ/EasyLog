@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   ~ Copyright 2015 Vincent Brison.
   ~
@@ -15,10 +15,10 @@
   ~ limitations under the License.
   -->
 
-<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Android Application Rules"
-    xmlns="http://pmd.sf.net/ruleset/1.0.0"
-    xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd"
-    xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd">
+<ruleset name="Android Application Rules"
+    xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.net/ruleset_2_0_0.xsd">
 
     <description>Custom ruleset for Android application</description>
 
@@ -27,22 +27,43 @@
     <exclude-pattern>.*/androidTest/.*</exclude-pattern>
     <exclude-pattern>.*/test/.*</exclude-pattern>
 
-    <rule ref="rulesets/java/android.xml" />
-    <rule ref="rulesets/java/clone.xml" />
-    <rule ref="rulesets/java/finalizers.xml" />
-    <rule ref="rulesets/java/imports.xml">
-        <!-- Espresso is designed this way !-->
-        <exclude name="TooManyStaticImports" />
+    <!--<rule ref="rulesets/java/android.xml" />-->
+    <!--<rule ref="rulesets/java/clone.xml" />-->
+    <!--<rule ref="rulesets/java/finalizers.xml" />-->
+    <!--<rule ref="rulesets/java/imports.xml">-->
+        <!--&lt;!&ndash; Espresso is designed this way !&ndash;&gt;-->
+        <!--<exclude name="TooManyStaticImports" />-->
+    <!--</rule>-->
+    <!--<rule ref="rulesets/java/logging-java.xml" />-->
+    <!--<rule ref="rulesets/java/braces.xml" />-->
+    <!--<rule ref="rulesets/java/strings.xml" />-->
+    <!--<rule ref="rulesets/java/basic.xml" />-->
+    <!--<rule ref="rulesets/java/naming.xml">-->
+        <!--<exclude name="AbstractNaming" />-->
+        <!--<exclude name="LongVariable" />-->
+        <!--<exclude name="ShortMethodName" />-->
+        <!--<exclude name="ShortVariable" />-->
+        <!--<exclude name="VariableNamingConventions" />-->
+    <!--</rule>-->
+    <rule ref="category/java/bestpractices.xml" >
+        <exclude name="UnusedImports"></exclude>
     </rule>
-    <rule ref="rulesets/java/logging-java.xml" />
-    <rule ref="rulesets/java/braces.xml" />
-    <rule ref="rulesets/java/strings.xml" />
-    <rule ref="rulesets/java/basic.xml" />
-    <rule ref="rulesets/java/naming.xml">
-        <exclude name="AbstractNaming" />
-        <exclude name="LongVariable" />
-        <exclude name="ShortMethodName" />
-        <exclude name="ShortVariable" />
-        <exclude name="VariableNamingConventions" />
+    <rule ref="category/java/codestyle.xml" >
+        <exclude name="DontImportJavaLang"></exclude>
     </rule>
+    <rule ref="category/java/design.xml" >
+        <exclude name="LoosePackageCoupling" />
+        <exclude name="StdCyclomaticComplexity" />
+    </rule>
+    <rule ref="category/java/documentation.xml" >
+        <exclude name="CommentSize"></exclude>
+    </rule>
+    <rule ref="category/java/errorprone.xml" >
+        <exclude name="CallSuperFirst"></exclude>
+        <exclude name="BeanMembersShouldSerialize"></exclude>
+        <exclude name="DataflowAnomalyAnalysis"></exclude>
+    </rule>
+    <rule ref="category/java/multithreading.xml" />
+    <rule ref="category/java/performance.xml" />
+    <rule ref="category/java/security.xml" />
 </ruleset>
