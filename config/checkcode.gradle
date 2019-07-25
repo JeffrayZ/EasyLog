@@ -4,7 +4,7 @@ apply plugin: "pmd"
 
 //check.dependsOn 'findbugs'
 //check.dependsOn 'pmd'
-//check.dependsOn 'checkcode'
+//check.dependsOn 'checkstyle'
 
 def reportsDir = "${project.buildDir}/reports"
 def configDir = "${project.rootDir}/config"
@@ -17,8 +17,8 @@ def configDir = "${project.rootDir}/config"
 task checkstyle(type: Checkstyle) {
     showViolations = true
     ignoreFailures = true // 忽略错误继续构建
-    configFile file("$configDir/checkcode/huawei_CheckStyle.xml")
-    configProperties.checkstyleSuppressionsPath = file("$configDir/checkcode/suppressions.xml").absolutePath
+    configFile file("$configDir/checkstyle/huawei_CheckStyle.xml")
+    configProperties.checkstyleSuppressionsPath = file("$configDir/checkstyle/suppressions.xml").absolutePath
     source 'src'
     include '**/*.java'
     exclude '**/gen/**'
@@ -28,10 +28,10 @@ task checkstyle(type: Checkstyle) {
         xml.enabled = true
         html.enabled = false
         xml {
-            destination file("$reportsDir/checkcode/checkcode.xml")
+            destination file("$reportsDir/checkstyle/checkstyle.xml")
         }
         html {
-            destination file("$reportsDir/checkcode/checkcode.html")
+            destination file("$reportsDir/checkstyle/checkstyle.html")
         }
     }
     classpath = files()
