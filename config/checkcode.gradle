@@ -1,0 +1,96 @@
+apply plugin: 'checkstyle'
+apply plugin: "findbugs"
+apply plugin: "pmd"
+
+//check.dependsOn 'findbugs'
+//check.dependsOn 'pmd'
+//check.dependsOn 'checkcode'
+
+def reportsDir = "${project.buildDir}/reports"
+def configDir = "${project.rootDir}/config"
+
+
+
+/**
+ * checkstyle配置
+ * */
+task checkstyle(type: Checkstyle) {
+    showViolations = true
+    ignoreFailures = true // 忽略错误继续构建
+    configFile file("$configDir/checkcode/huawei_CheckStyle.xml")
+    configProperties.checkstyleSuppressionsPath = file("$configDir/checkcode/suppressions.xml").absolutePath
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**'
+    exclude '**/test/**'
+    exclude '**/androidTest/**'
+    reports { // 支持html和xml两种报告形式，可以任选其一(html更具有可读性)
+        xml.enabled = true
+        html.enabled = false
+        xml {
+            destination file("$reportsDir/checkcode/checkcode.xml")
+        }
+        html {
+            destination file("$reportsDir/checkcode/checkcode.html")
+        }
+    }
+    classpath = files()
+}
+
+
+
+
+/**
+ * findbugs配置
+ * */
+task findbugs(type: FindBugs) {
+    ignoreFailures = true
+    effort = "min"
+    reportLevel = "high" //low,medium,high
+    excludeFilter = new File("$configDir/findbugs/findbugs-filter.xml")
+    classes = files("$project.buildDir/intermediates/javac")
+
+    source = fileTree('src/main/')
+    include '**/*.java'
+    exclude '**/gen/**'
+
+    reports {
+        xml.enabled = true
+        html.enabled = false
+        xml {
+            destination file("$reportsDir/findbugs/findbugs.xml")
+        }
+        html {
+            destination file("$reportsDir/findbugs/findbugs.html")
+        }
+    }
+
+    classpath = files()
+}
+
+
+
+
+/**
+ * PMD配置
+ * */
+task pmd(type: Pmd) {
+    ignoreFailures = true
+    ruleSetFiles = files("$configDir/pmd/pmd-ruleset.xml")
+    ruleSets = ["java-android"]
+
+    source 'src/main/'
+    include '**/*.java'
+    exclude '**/gen/**'
+
+    reports {
+        xml.enabled = true
+        html.enabled = false
+        xml {
+            destination file("$reportsDir/pmd/pmd.xml")
+        }
+        html {
+            destination file("$reportsDir/pmd/pmd.html")
+        }
+    }
+}
