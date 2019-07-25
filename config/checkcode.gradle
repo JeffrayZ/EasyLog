@@ -26,7 +26,7 @@ task checkstyle(type: Checkstyle) {
     exclude '**/androidTest/**'
     reports { // 支持html和xml两种报告形式，可以任选其一(html更具有可读性)
         xml.enabled = true
-        html.enabled = false
+        html.enabled = true
         xml {
             destination file("$reportsDir/checkstyle/checkstyle.xml")
         }
@@ -55,8 +55,8 @@ task findbugs(type: FindBugs) {
     exclude '**/gen/**'
 
     reports {
-        xml.enabled = true
-        html.enabled = false
+        xml.enabled = false
+        html.enabled = true
         xml {
             destination file("$reportsDir/findbugs/findbugs.xml")
         }
@@ -84,8 +84,8 @@ task pmd(type: Pmd) {
     exclude '**/gen/**'
 
     reports {
-        xml.enabled = true
-        html.enabled = false
+        xml.enabled = false
+        html.enabled = true
         xml {
             destination file("$reportsDir/pmd/pmd.xml")
         }
